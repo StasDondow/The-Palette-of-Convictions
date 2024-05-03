@@ -10,8 +10,9 @@ def chi(obs_is_act, obs_not_act):
     # очікувана кількість неактивованих користувачів
     exp_not_act = sum(obs_not_act) / len(obs_not_act)
 
-    R_is_act = [((obs_is_act[i] - exp_is_act) / sqrt(exp_is_act)) ** 2 for i in range(len(obs_is_act))]
-    R_not_act = [((obs_not_act[i] - exp_not_act) / sqrt(exp_not_act)) ** 2 for i in range(len(obs_not_act))]
+    # враховуємо поправку Єйтса
+    R_is_act = [((abs(obs_is_act[i] - exp_is_act) - 0.5) / sqrt(exp_is_act)) ** 2 for i in range(len(obs_is_act))]
+    R_not_act = [((abs(obs_not_act[i] - exp_not_act) - 0.5) / sqrt(exp_not_act)) ** 2 for i in range(len(obs_not_act))]
     return sum(R_is_act) + sum(R_not_act)
 
 
